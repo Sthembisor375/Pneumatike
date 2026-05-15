@@ -13,10 +13,10 @@ import {
 import { gsap } from "@/lib/gsap";
 
 const SECTION_IDS = [
-  "about",
   "reach",
   "services",
   "sessions",
+  "about",
   "next-steps",
 ] as const;
 
@@ -28,10 +28,10 @@ const navLinks: readonly {
   label: string;
   sectionId: SectionId;
 }[] = [
-  { href: "/#about", label: "About", sectionId: "about" },
   { href: "/#reach", label: "Reach", sectionId: "reach" },
   { href: "/#services", label: "Services", sectionId: "services" },
   { href: "/#sessions", label: "Formats", sectionId: "sessions" },
+  { href: "/#about", label: "About", sectionId: "about" },
   { href: "/#next-steps", label: "Start here", sectionId: "next-steps" },
 ];
 
@@ -64,7 +64,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 
 function computeActiveSection(headerHeight: number): SectionId {
   const line = headerHeight + 6;
-  let current: SectionId = "about";
+  let current: SectionId = SECTION_IDS[0];
   for (const id of SECTION_IDS) {
     const el = document.getElementById(id);
     if (!el) continue;
@@ -78,7 +78,8 @@ function computeActiveSection(headerHeight: number): SectionId {
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [activeSectionId, setActiveSectionId] = useState<SectionId>("about");
+  const [activeSectionId, setActiveSectionId] =
+    useState<SectionId>(SECTION_IDS[0]);
 
   const headerRef = useRef<HTMLElement>(null);
   const navTrackRef = useRef<HTMLDivElement>(null);

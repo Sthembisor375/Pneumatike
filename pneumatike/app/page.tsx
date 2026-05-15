@@ -1,7 +1,11 @@
+import { AboutSection } from "./components/AboutSection";
 import { FirstTouchCtaSection } from "./components/FirstTouchCtaSection";
 import { type FormatCardItem } from "./components/FormatCardsGrid";
 import { FormatsSection } from "./components/FormatsSection";
-import { GlobalReachSection, type ReachZone } from "./components/GlobalReachSection";
+import {
+  GlobalReachSection,
+  type ReachZone,
+} from "./components/GlobalReachSection";
 import { HeroSection } from "./components/HeroSection";
 import { type ServiceCardItem } from "./components/ServicesCardsGrid";
 import { ServicesSection } from "./components/ServicesSection";
@@ -16,13 +20,37 @@ const heroContent = {
   logoAlt: "Pneumatike",
   logoWidth: 384,
   logoHeight: 256,
-  introId: "about",
   introText:
     "Pastoral care for individuals and families—mentorship, training, and guidance for whatever season you are in. This is the first place to learn how we might work together, wherever you are in the world.",
   ctas: [
-    { href: "/contact", label: "Begin a conversation", variant: "primary" as const },
-    { href: "#services", label: "Explore services", variant: "outline" as const },
+    {
+      href: "/contact",
+      label: "Begin a conversation",
+      variant: "primary" as const,
+    },
+    {
+      href: "#services",
+      label: "Explore services",
+      variant: "outline" as const,
+    },
   ],
+};
+
+const aboutContent = {
+  eyebrow: "About",
+  title: "Presence-centred pastoral care for real life, wherever you are",
+  lead: "Pneumatike exists so individuals and households can pursue formation, clarity, and hope without pretending that distance or demanding seasons make faithful care impossible.",
+  visionHeading: "The vision",
+  visionBody:
+    "We imagine a disciplined, gentle companionship anchored in Scripture and prayer: a platform shaped around listening well, pacing with discernment, and offering teaching that bends toward obedience and joy—not quick fixes or performance. Relationships stay human; technology only serves trust, rhythm, and follow-through between conversations.",
+  founderHeading: "The founder",
+  founderBody:
+    "This work is led by a pastor-teacher drawn to mentorship at the intersections of ministry, marriage, parenting, and leadership fatigue. Formal biography and portraits will arrive here soon; until then this space holds the conviction that Christ-shaped care should be geographically available, culturally attentive, and unhurried enough to honour your story.",
+  imageSrc: "/lawrence-crayton-cVb7BGt9FiQ-unsplash.jpg",
+  imageAlt:
+    "Temporary placeholder photograph for the About section—warm light and organic texture.",
+  imageCaption:
+    "Placeholder image. Final founder photography and updated copy will replace this block.",
 };
 
 const reachZones: ReachZone[] = [
@@ -63,8 +91,7 @@ const reachZones: ReachZone[] = [
 const globalReachContent = {
   sectionId: "reach",
   eyebrow: "Worldwide availability",
-  title:
-    "Serving families and individuals across regions and time zones",
+  title: "Serving families and individuals across regions and time zones",
   description:
     "Sessions are arranged to respect your location, language preferences where possible, and the rhythms of your household—not only a single city or campus.",
   zones: reachZones,
@@ -190,6 +217,8 @@ export default function Home() {
       <SplitFeatureSection {...trainingFeatureContent} />
 
       <TrustStatementSection {...trustContent} />
+
+      <AboutSection {...aboutContent} />
 
       <FirstTouchCtaSection {...firstTouchContent} />
     </>
