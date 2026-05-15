@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -16,12 +17,16 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-[#636D51] text-neutral-100">
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
-        <Link
-          href="/"
-          className="font-semibold uppercase tracking-[0.2em] text-sm text-neutral-50"
-        >
-          Pneumatike
+      <div className="mx-auto flex h-22 max-w-7xl items-center justify-between px-4 sm:h-26 sm:px-6 lg:px-8">
+        <Link href="/" className="inline-flex shrink-0 items-center">
+          <Image
+            src="/Pneumatike%20icon.svg"
+            alt="Pneumatike"
+            width={256}
+            height={256}
+            priority
+            className="h-16 w-16 sm:h-20 sm:w-20"
+          />
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((item) => (

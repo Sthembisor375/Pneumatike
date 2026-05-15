@@ -79,12 +79,14 @@ export function HeroSection() {
         ref={introRef}
         className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center"
       >
-        <p className="mb-4 text-xs uppercase tracking-[0.35em] text-[#D2C2A9]">
-          Pneumatike
-        </p>
-        <h1 className="max-w-3xl font-serif text-5xl leading-[1.05] tracking-tight sm:text-6xl lg:text-[4.25rem]">
-          Mentorship rooted in Christ
-        </h1>
+        <Image
+          src="/Pneumatike%20logo%20text.svg"
+          alt="Pneumatike"
+          width={384}
+          height={256}
+          priority
+          className="mx-auto h-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:max-w-[24rem]"
+        />
         <p
           id="about"
           className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-neutral-300 sm:text-xl"
