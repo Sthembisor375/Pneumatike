@@ -24,12 +24,6 @@ export function SiteFooter() {
             </Link>
             .
           </p>
-          <Link
-            href="/#reach"
-            className="mt-6 inline-flex text-sm font-semibold uppercase tracking-wider text-white hover:underline"
-          >
-            Review global reach →
-          </Link>
         </div>
         <div className="flex flex-wrap gap-4 text-neutral-400">
           <Link
