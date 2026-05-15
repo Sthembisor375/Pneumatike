@@ -5,12 +5,41 @@ import Link from "next/link";
 import { useRef } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 
+export type HeroCta = {
+  href: string;
+  label: string;
+  variant: "primary" | "outline";
+};
+
+export type HeroSectionProps = {
+  backgroundSrc: string;
+  backgroundAlt: string;
+  logoSrc: string;
+  logoAlt: string;
+  logoWidth: number;
+  logoHeight: number;
+  /** Optional id on the intro paragraph (e.g. for in-page anchors). */
+  introId?: string;
+  introText: string;
+  ctas: HeroCta[];
+};
+
 /**
  * Hero background uses position:fixed + clip-path on the section so the photo
  * stays visually stationary against the viewport while hero copy scrolls over it
  * (same idea as background-attachment: fixed, works with next/image).
  */
-export function HeroSection() {
+export function HeroSection({
+  backgroundSrc,
+  backgroundAlt,
+  logoSrc,
+  logoAlt,
+  logoWidth,
+  logoHeight,
+  introId,
+  introText,
+  ctas,
+}: HeroSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
 
@@ -46,8 +75,8 @@ export function HeroSection() {
         aria-hidden
       >
         <Image
-          src="/iwaria-inc-Q6KzWe-lq9Y-unsplash.jpg"
-          alt=""
+          src={backgroundSrc}
+          alt={backgroundAlt}
           fill
           priority
           sizes="100vw"
@@ -80,34 +109,39 @@ export function HeroSection() {
         className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center"
       >
         <Image
-          src="/Pneumatike%20logo%20text.svg"
-          alt="Pneumatike"
-          width={384}
-          height={256}
+          src={logoSrc}
+          alt={logoAlt}
+          width={logoWidth}
+          height={logoHeight}
           priority
           className="mx-auto h-auto w-full max-w-[16rem] sm:max-w-[20rem] lg:max-w-[24rem]"
         />
         <p
-          id="about"
+          id={introId}
           className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-neutral-300 sm:text-xl"
         >
-          Pastoral care for individuals and families—mentorship, training, and
-          guidance for whatever season you are in. This is the first place to
-          learn how we might work together, wherever you are in the world.
+          {introText}
         </p>
         <div className="mt-12 flex flex-wrap justify-center gap-4">
-          <Link
-            href="/contact"
-            className="inline-flex rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-950 shadow-sm transition hover:bg-neutral-100"
-          >
-            Begin a conversation
-          </Link>
-          <Link
-            href="#services"
-            className="inline-flex rounded-full border border-white/30 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-50 transition hover:border-white/55 hover:bg-white/5"
-          >
-            Explore services
-          </Link>
+          {ctas.map((cta) =>
+            cta.variant === "primary" ? (
+              <Link
+                key={cta.href + cta.label}
+                href={cta.href}
+                className="inline-flex rounded-full bg-white px-8 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-950 shadow-sm transition hover:bg-neutral-100"
+              >
+                {cta.label}
+              </Link>
+            ) : (
+              <Link
+                key={cta.href + cta.label}
+                href={cta.href}
+                className="inline-flex rounded-full border border-white/30 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-neutral-50 transition hover:border-white/55 hover:bg-white/5"
+              >
+                {cta.label}
+              </Link>
+            ),
+          )}
         </div>
       </div>
     </section>

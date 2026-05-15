@@ -11,6 +11,8 @@ export type FormatCardItem = {
   copy: string;
   imageSrc: string;
   imageAlt: string;
+  ctaHref: string;
+  ctaLabel: string;
 };
 
 type Props = {
@@ -132,10 +134,10 @@ export function FormatCardsGrid({ cards }: Props) {
                 </p>
                 <Link
                   data-format-animate
-                  href="/contact"
+                  href={item.ctaHref}
                   className="mt-8 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white"
                 >
-                  Ask about availability →
+                  {item.ctaLabel}
                 </Link>
               </div>
             </div>

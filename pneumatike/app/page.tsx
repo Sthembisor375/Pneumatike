@@ -1,11 +1,31 @@
-import Image from "next/image";
-import Link from "next/link";
-import { FormatCardsGrid } from "./components/format-cards-grid";
-import { HeroSection } from "./components/hero-section";
-import { ServicesCardsGrid } from "./components/services-cards-grid";
-import { SiteHeader } from "./components/site-header";
+import { FirstTouchCtaSection } from "./components/FirstTouchCtaSection";
+import { type FormatCardItem } from "./components/FormatCardsGrid";
+import { FormatsSection } from "./components/FormatsSection";
+import { GlobalReachSection, type ReachZone } from "./components/GlobalReachSection";
+import { HeroSection } from "./components/HeroSection";
+import { type ServiceCardItem } from "./components/ServicesCardsGrid";
+import { ServicesSection } from "./components/ServicesSection";
+import { SiteHeader } from "./components/SiteHeader";
+import { SplitFeatureSection } from "./components/SplitFeatureSection";
+import { TrustStatementSection } from "./components/TrustStatementSection";
 
-const reachZones = [
+const heroContent = {
+  backgroundSrc: "/iwaria-inc-Q6KzWe-lq9Y-unsplash.jpg",
+  backgroundAlt: "",
+  logoSrc: "/Pneumatike%20logo%20text.svg",
+  logoAlt: "Pneumatike",
+  logoWidth: 384,
+  logoHeight: 256,
+  introId: "about",
+  introText:
+    "Pastoral care for individuals and families—mentorship, training, and guidance for whatever season you are in. This is the first place to learn how we might work together, wherever you are in the world.",
+  ctas: [
+    { href: "/contact", label: "Begin a conversation", variant: "primary" as const },
+    { href: "#services", label: "Explore services", variant: "outline" as const },
+  ],
+};
+
+const reachZones: ReachZone[] = [
   {
     title: "Americas",
     places: [
@@ -40,7 +60,17 @@ const reachZones = [
   },
 ];
 
-const serviceCards = [
+const globalReachContent = {
+  sectionId: "reach",
+  eyebrow: "Worldwide availability",
+  title:
+    "Serving families and individuals across regions and time zones",
+  description:
+    "Sessions are arranged to respect your location, language preferences where possible, and the rhythms of your household—not only a single city or campus.",
+  zones: reachZones,
+};
+
+const serviceCards: ServiceCardItem[] = [
   {
     title: "Pastoral mentorship",
     subtitle:
@@ -48,6 +78,7 @@ const serviceCards = [
     imageSrc: "/prayer-hands-black-men-brown-green.png",
     imageAlt:
       "Two men seated outdoors having a thoughtful conversation, suggesting mentorship.",
+    footerLabel: "Discuss in inquiry →",
   },
   {
     title: "Training & equipping",
@@ -56,6 +87,7 @@ const serviceCards = [
     imageSrc: "/pexels-leonardodourado-13011294.jpg",
     imageAlt:
       "Person studying with notes and laptop, suggesting focused learning.",
+    footerLabel: "Discuss in inquiry →",
   },
   {
     title: "Family guidance",
@@ -64,6 +96,7 @@ const serviceCards = [
     imageSrc: "/young-black-family-green-nature.png",
     imageAlt:
       "Family spending time together outdoors, suggesting connection and guidance.",
+    footerLabel: "Discuss in inquiry →",
   },
   {
     title: "Guidance & discernment",
@@ -72,10 +105,20 @@ const serviceCards = [
     imageSrc: "/guidance-compass-green.png",
     imageAlt:
       "Quiet contemplative setting by water, suggesting reflection and discernment.",
+    footerLabel: "Discuss in inquiry →",
   },
 ];
 
-const formatCards = [
+const servicesSectionContent = {
+  sectionId: "services",
+  eyebrow: "Services",
+  title: "How we can walk with you",
+  intro:
+    "Each engagement is shaped to your context—personal faith journey, family life, ministry demands, or leadership responsibility.",
+  cards: serviceCards,
+};
+
+const formatCards: FormatCardItem[] = [
   {
     eyebrow: "Focused seasons",
     title: "Intensives & short courses",
@@ -83,6 +126,8 @@ const formatCards = [
     imageSrc: "/nick-morrison-FHnnjk1Yj7Y-unsplash.jpg",
     imageAlt:
       "Desk with laptop, notebook, and coffee—suggesting focused study or an intensive working session.",
+    ctaHref: "/contact",
+    ctaLabel: "Ask about availability →",
   },
   {
     eyebrow: "Ongoing care",
@@ -91,168 +136,62 @@ const formatCards = [
     imageSrc: "/dylan-ferreira-HJmxky8Fvmo-unsplash.jpg",
     imageAlt:
       "Person at home on a video call with a laptop—suggesting regular remote mentoring sessions.",
+    ctaHref: "/contact",
+    ctaLabel: "Ask about availability →",
   },
 ];
+
+const formatsSectionContent = {
+  sectionId: "sessions",
+  eyebrow: "Formats",
+  title: "Depth when you need it, continuity when it matters",
+  intro:
+    "From intensive seasons to steady accompaniment—formats are agreed in your first conversation so expectations stay clear.",
+  cards: formatCards,
+};
+
+const trainingFeatureContent = {
+  imageSrc: "/sincerely-media-dGxOgeXAXm8-unsplash.jpg",
+  imageAlt:
+    "Woman reading a book in a group setting, suggesting study and training together.",
+  eyebrow: "Training",
+  title: "Equipping that translates into daily life",
+  body: "Teaching is offered so it sticks—not only information, but wisdom you can apply at home, at work, and in community. Content can be adapted for individuals, couples, or invited groups when a shared learning environment fits your goals.",
+  link: { href: "#next-steps", label: "See how to begin" },
+};
+
+const trustContent = {
+  title: "Faithful care, human pace",
+  body: "Christ-centred mentorship honours both truth and tenderness. You can expect respectful listening, biblical fidelity appropriate to your questions, and clarity about scope—including referrals when another kind of specialist care is the wise next step for you or your family.",
+};
+
+const firstTouchContent = {
+  sectionId: "next-steps",
+  eyebrow: "First touch",
+  title: "Tell us what you are navigating",
+  description:
+    "Share briefly who you are, what you hope for, and any scheduling or geographic details. You will receive guidance on fit, possible formats, and sensible next steps—including how soon to expect a reply.",
+  cta: { href: "/contact", label: "Continue to contact" },
+};
 
 export default function Home() {
   return (
     <>
       <SiteHeader />
 
-      <HeroSection />
+      <HeroSection {...heroContent} />
 
-      {/* Global reach */}
-      <section
-        id="reach"
-        className="border-y border-neutral-200 bg-neutral-50 py-14 text-neutral-900"
-      >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-xs text-[#AC8465] font-semibold uppercase tracking-[0.3em]">
-            Worldwide availability
-          </p>
-          <h2 className="mt-3 text-center text-2xl text-[#636D51] font-semibold tracking-tight sm:text-3xl">
-            Serving families and individuals across regions and time zones
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-neutral-600">
-            Sessions are arranged to respect your location, language preferences
-            where possible, and the rhythms of your household—not only a single
-            city or campus.
-          </p>
-          <div className="mt-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-            {reachZones.map((block) => (
-              <div key={block.title}>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-950">
-                  {block.title}
-                </h3>
-                <ul className="mt-4 space-y-2 text-neutral-600">
-                  {block.places.map((place) => (
-                    <li key={place}>
-                      <span className="border-b border-neutral-900/15 pb-0.5">
-                        {place}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <GlobalReachSection {...globalReachContent} />
 
-      {/* Services */}
-      <section id="services" className="bg-white py-20 text-neutral-950">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-2xl">
-            <p className="text-xs font-semibold text-[#AC8465] uppercase tracking-[0.3em]">
-              Services
-            </p>
-            <h2 className="mt-2 text-3xl font-semibold text-[#636D51] tracking-tight sm:text-4xl">
-              How we can walk with you
-            </h2>
-            <p className="mt-4 text-neutral-600">
-              Each engagement is shaped to your context—personal faith journey,
-              family life, ministry demands, or leadership responsibility.
-            </p>
-          </div>
-          <ServicesCardsGrid cards={serviceCards} />
-        </div>
-      </section>
+      <ServicesSection {...servicesSectionContent} />
 
-      {/* Formats */}
-      <section id="sessions" className="bg-neutral-950 py-20 text-neutral-100">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white">
-            Formats
-          </p>
-          <h2 className="mt-2 text-3xl text-[#D2C2A9] font-semibold tracking-tight sm:text-4xl">
-            Depth when you need it, continuity when it matters
-          </h2>
-          <p className="mt-4 max-w-2xl text-white">
-            From intensive seasons to steady accompaniment—formats are agreed in
-            your first conversation so expectations stay clear.
-          </p>
-          <FormatCardsGrid cards={formatCards} />
-        </div>
-      </section>
+      <FormatsSection {...formatsSectionContent} />
 
-      {/* Training emphasis */}
-      <section className="border-y border-neutral-200 bg-white py-20 text-neutral-950">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
-          <div className="order-2 overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-900 shadow-lg lg:order-1">
-            <div className="relative aspect-[4/3] w-full">
-              <Image
-                src="/sincerely-media-dGxOgeXAXm8-unsplash.jpg"
-                alt="Woman reading a book in a group setting, suggesting study and training together."
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover object-center"
-              />
-            </div>
-          </div>
-          <div className="order-1 lg:order-2">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-              Training
-            </p>
-            <h2 className="mt-2 text-3xl text-[#636D51] font-semibold tracking-tight sm:text-4xl">
-              Equipping that translates into daily life
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-neutral-600">
-              Teaching is offered so it sticks—not only information, but wisdom
-              you can apply at home, at work, and in community. Content can be
-              adapted for individuals, couples, or invited groups when a shared
-              learning environment fits your goals.
-            </p>
-            <Link
-              href="#next-steps"
-              className="mt-8 inline-flex text-sm font-semibold uppercase tracking-wider underline decoration-neutral-300 underline-offset-8 hover:decoration-neutral-900"
-            >
-              See how to begin
-            </Link>
-          </div>
-        </div>
-      </section>
+      <SplitFeatureSection {...trainingFeatureContent} />
 
-      {/* Trust */}
-      <section className="bg-neutral-100 py-20 text-neutral-900">
-        <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-            Faithful care, human pace
-          </h2>
-          <p className="mx-auto mt-6 text-lg leading-relaxed text-neutral-600">
-            Christ-centred mentorship honours both truth and tenderness. You can
-            expect respectful listening, biblical fidelity appropriate to your
-            questions, and clarity about scope—including referrals when another
-            kind of specialist care is the wise next step for you or your
-            family..
-          </p>
-        </div>
-      </section>
+      <TrustStatementSection {...trustContent} />
 
-      {/* First touch / next steps */}
-      <section id="next-steps" className="bg-white py-20 text-neutral-950">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-gradient-to-br from-neutral-50 to-neutral-100 px-8 py-14 text-center shadow-sm sm:px-12">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-neutral-500">
-              First touch
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Tell us what you are navigating
-            </h2>
-            <p className="mx-auto mt-5 max-w-2xl text-neutral-600">
-              Share briefly who you are, what you hope for, and any scheduling
-              or geographic details. You will receive guidance on fit, possible
-              formats, and sensible next steps—including how soon to expect a
-              reply.
-            </p>
-            <Link
-              href="/contact"
-              className="mt-10 inline-flex rounded-full bg-neutral-950 px-8 py-3 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-neutral-800"
-            >
-              Continue to contact
-            </Link>
-          </div>
-        </div>
-      </section>
+      <FirstTouchCtaSection {...firstTouchContent} />
     </>
   );
 }

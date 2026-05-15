@@ -9,6 +9,8 @@ export type ServiceCardItem = {
   subtitle: string;
   imageSrc: string;
   imageAlt: string;
+  /** Short line shown at the bottom of each card (e.g. link hint). */
+  footerLabel: string;
 };
 
 type Props = {
@@ -112,7 +114,7 @@ export function ServicesCardsGrid({ cards }: Props) {
               {card.subtitle}
             </p>
             <span className="mt-auto text-xs font-semibold uppercase tracking-wider text-neutral-900">
-              Discuss in inquiry →
+              {card.footerLabel}
             </span>
           </div>
         </article>

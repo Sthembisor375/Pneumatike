@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SiteHeader } from "../components/site-header";
+import { SiteHeader } from "../components/SiteHeader";
 import { ContactForm } from "./contact-form";
 
 export const metadata: Metadata = {

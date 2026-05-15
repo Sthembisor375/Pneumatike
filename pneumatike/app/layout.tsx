@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Libre_Baskerville } from "next/font/google";
-import { HashScroll } from "./components/hash-scroll";
-import { SiteFooter } from "./components/site-footer";
+import { HashScroll } from "./components/HashScroll";
+import { SiteFooter } from "./components/SiteFooter";
 import "./globals.css";
 
 const geistSans = Geist({
