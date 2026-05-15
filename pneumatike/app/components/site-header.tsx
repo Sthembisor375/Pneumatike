@@ -5,17 +5,17 @@ import Link from "next/link";
 
 const navLinks = [
   { href: "#about", label: "About" },
-  { href: "#regions", label: "Locations" },
-  { href: "#music", label: "Music" },
-  { href: "#gatherings", label: "Gatherings" },
-  { href: "#stories", label: "Stories" },
+  { href: "#reach", label: "Reach" },
+  { href: "#services", label: "Services" },
+  { href: "#sessions", label: "Formats" },
+  { href: "#next-steps", label: "Start here" },
 ];
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-neutral-950/85 text-neutral-100 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#636D51] text-neutral-100">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 sm:px-6 lg:px-8">
         <Link
           href="/"
@@ -34,10 +34,10 @@ export function SiteHeader() {
             </Link>
           ))}
           <Link
-            href="#find"
+            href="/contact"
             className="rounded-full border border-white/25 bg-white px-4 py-2 text-xs font-medium uppercase tracking-wider text-neutral-950 transition hover:bg-neutral-100"
           >
-            Find a gathering
+            Get in touch
           </Link>
         </nav>
         <button
@@ -67,11 +67,11 @@ export function SiteHeader() {
               </Link>
             ))}
             <Link
-              href="#find"
+              href="/contact"
               className="mt-2 inline-flex w-fit rounded-full border border-white/25 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-wider text-neutral-950"
               onClick={() => setOpen(false)}
             >
-              Find a gathering
+              Get in touch
             </Link>
           </div>
         </div>

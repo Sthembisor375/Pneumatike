@@ -19,9 +19,9 @@ const libre = Libre_Baskerville({
 });
 
 export const metadata: Metadata = {
-  title: "Pneumatike — Welcome home",
+  title: "Pneumatike — Pastoral mentorship & guidance",
   description:
-    "Local church, worship, gatherings, and stories—faithful community centred on Jesus.",
+    "Christian pastoral mentorship, training, and guidance for individuals and families—available worldwide. Your first step toward working together.",
 };
 
 export default function RootLayout({
