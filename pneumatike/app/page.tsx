@@ -223,7 +223,7 @@ export default function Home() {
             expect respectful listening, biblical fidelity appropriate to your
             questions, and clarity about scope—including referrals when another
             kind of specialist care is the wise next step for you or your
-            family.
+            family..
           </p>
         </div>
       </section>
