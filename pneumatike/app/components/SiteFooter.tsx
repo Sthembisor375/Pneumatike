@@ -5,7 +5,7 @@ export function SiteFooter() {
     <footer className="mt-auto shrink-0 bg-[#3b4131] py-14 text-neutral-200">
       <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:flex-row sm:items-end sm:justify-between sm:px-6 lg:px-8">
         <div>
-          <p className="text-xs uppercase tracking-[0.3em] text-neutral-500">
+          <p className="text-xs uppercase tracking-[0.3em] text-neutral-200">
             Pneumatike
           </p>
           <p className="mt-4 max-w-md text-neutral-400">
@@ -14,7 +14,7 @@ export function SiteFooter() {
             story. Reach out to explore whether this is the right season to work
             together.
           </p>
-          <p className="mt-6 text-sm text-neutral-500">
+          <p className="mt-6 text-sm text-neutral-400">
             Prefer the full form?{" "}
             <Link
               href="/contact"
@@ -42,7 +42,7 @@ export function SiteFooter() {
           ))}
         </div>
       </div>
-      <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-4 pt-8 text-xs text-neutral-500 sm:px-6 lg:px-8">
+      <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-4 pt-8 text-xs text-neutral-400 sm:px-6 lg:px-8">
         © {new Date().getFullYear()} Pneumatike. Professional pastoral services
         may be subject to local regulation; visitors are responsible for
         verifying suitability for their situation.

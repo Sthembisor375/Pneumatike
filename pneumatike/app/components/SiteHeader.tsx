@@ -21,7 +21,7 @@ const SECTION_IDS = [
 ] as const;
 
 type SectionId = (typeof SECTION_IDS)[number];
-type NavHighlightId = SectionId | "contact" | "podcast";
+type NavHighlightId = SectionId | "contact" | "podcast" | "blog";
 
 const navLinks: readonly {
   href: string;
@@ -95,9 +95,11 @@ export function SiteHeader() {
       ? "contact"
       : pathname === "/podcast"
         ? "podcast"
-        : pathname === "/"
-          ? activeSectionId
-          : null;
+        : pathname === "/blog" || pathname.startsWith("/blog/")
+          ? "blog"
+          : pathname === "/"
+            ? activeSectionId
+            : null;
 
   const animateUnderline = useCallback(
     (mode: "jump" | "quick" | "hide") => {
@@ -272,6 +274,7 @@ export function SiteHeader() {
     pathname === "/" && activeSectionId === sectionId;
   const contactIsActive = pathname === "/contact";
   const podcastIsActive = pathname === "/podcast";
+  const blogIsActive = pathname === "/blog" || pathname.startsWith("/blog/");
 
   return (
     <header
@@ -326,6 +329,20 @@ export function SiteHeader() {
               }`}
             >
               Podcast
+            </Link>
+            <Link
+              ref={(el) => {
+                linkRefs.current.blog = el;
+              }}
+              href="/blog"
+              aria-current={blogIsActive ? "page" : undefined}
+              className={`relative z-10 text-xs uppercase tracking-[0.15em] transition-colors ${
+                blogIsActive
+                  ? "text-white"
+                  : "text-neutral-300 hover:text-white"
+              }`}
+            >
+              Blog
             </Link>
             <Link
               ref={(el) => {
@@ -411,6 +428,18 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
             >
               Podcast
+            </Link>
+            <Link
+              href="/blog"
+              aria-current={blogIsActive ? "page" : undefined}
+              className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
+                blogIsActive
+                  ? "border-white bg-white/10 text-white"
+                  : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
+              }`}
+              onClick={() => setOpen(false)}
+            >
+              Blog
             </Link>
             <Link
               href="/contact"
