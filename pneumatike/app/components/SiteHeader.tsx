@@ -21,7 +21,6 @@ const SECTION_IDS = [
 ] as const;
 
 type SectionId = (typeof SECTION_IDS)[number];
-type NavHighlightId = SectionId | "contact" | "podcast" | "blog";
 
 const navLinks: readonly {
   href: string;
@@ -34,6 +33,29 @@ const navLinks: readonly {
   { href: "/#about", label: "About", sectionId: "about" },
   { href: "/#next-steps", label: "Start here", sectionId: "next-steps" },
 ];
+
+const resourceLinks = [
+  { href: "/podcast", label: "Podcast" },
+  { href: "/blog", label: "Blog" },
+] as const;
+
+function resourceLinkClassName(active: boolean) {
+  return [
+    "rounded-full border-2 px-3.5 py-1.5 text-sm font-medium tracking-wide transition",
+    active
+      ? "border-[#D2C2A9]/50 bg-[#D2C2A9]/15 text-[#D2C2A9]"
+      : "border-white/15 text-neutral-200 hover:border-[#D2C2A9]/35 hover:bg-white/5 hover:text-[#D2C2A9]",
+  ].join(" ");
+}
+
+function resourceLinkMobileClassName(active: boolean) {
+  return [
+    "rounded-full border-2 px-4 py-2.5 text-sm font-medium tracking-wide transition",
+    active
+      ? "border-[#D2C2A9]/50 bg-[#D2C2A9]/15 text-[#D2C2A9]"
+      : "border-white/15 text-neutral-200 hover:border-[#D2C2A9]/35 hover:bg-white/5 hover:text-[#D2C2A9]",
+  ].join(" ");
+}
 
 function HamburgerIcon({ open }: { open: boolean }) {
   return (
@@ -86,20 +108,12 @@ export function SiteHeader() {
   const underlineRef = useRef<HTMLSpanElement>(null);
   const underlineTweenRef = useRef<gsap.core.Animation | null>(null);
   const skipResizeObserverRef = useRef(true);
-  const linkRefs = useRef<Partial<Record<NavHighlightId, HTMLAnchorElement | null>>>(
+  const linkRefs = useRef<Partial<Record<SectionId, HTMLAnchorElement | null>>>(
     {},
   );
 
-  const navHighlight: NavHighlightId | null =
-    pathname === "/contact"
-      ? "contact"
-      : pathname === "/podcast"
-        ? "podcast"
-        : pathname === "/blog" || pathname.startsWith("/blog/")
-          ? "blog"
-          : pathname === "/"
-            ? activeSectionId
-            : null;
+  const navHighlight: SectionId | null =
+    pathname === "/" ? activeSectionId : null;
 
   const animateUnderline = useCallback(
     (mode: "jump" | "quick" | "hide") => {
@@ -292,7 +306,10 @@ export function SiteHeader() {
             className="h-16 w-16 sm:h-20 sm:w-20"
           />
         </Link>
-        <nav className="hidden items-center gap-8 md:flex" aria-label="Primary">
+        <nav
+          className="hidden items-center gap-5 md:flex lg:gap-6"
+          aria-label="Primary"
+        >
           <div ref={navTrackRef} className="relative flex items-center gap-8">
             <span
               ref={underlineRef}
@@ -316,45 +333,38 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              ref={(el) => {
-                linkRefs.current.podcast = el;
-              }}
-              href="/podcast"
-              aria-current={podcastIsActive ? "page" : undefined}
-              className={`relative z-10 text-xs uppercase tracking-[0.15em] transition-colors ${
-                podcastIsActive
-                  ? "text-white"
-                  : "text-neutral-300 hover:text-white"
-              }`}
-            >
-              Podcast
-            </Link>
-            <Link
-              ref={(el) => {
-                linkRefs.current.blog = el;
-              }}
-              href="/blog"
-              aria-current={blogIsActive ? "page" : undefined}
-              className={`relative z-10 text-xs uppercase tracking-[0.15em] transition-colors ${
-                blogIsActive
-                  ? "text-white"
-                  : "text-neutral-300 hover:text-white"
-              }`}
-            >
-              Blog
-            </Link>
-            <Link
-              ref={(el) => {
-                linkRefs.current.contact = el;
-              }}
-              href="/contact"
-              aria-current={contactIsActive ? "page" : undefined}
-              className="relative z-10 rounded-full border border-white/25 bg-white px-4 py-2 text-xs font-medium uppercase tracking-wider text-neutral-950 transition hover:bg-neutral-100"
-            >
-              Get in touch
-            </Link>
           </div>
+
+          <span aria-hidden className="h-5 w-px shrink-0 bg-white/20" />
+
+          <div className="flex items-center gap-2" aria-label="Podcast and blog">
+            {resourceLinks.map((item) => {
+              const active =
+                item.href === "/podcast" ? podcastIsActive : blogIsActive;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={resourceLinkClassName(active)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </div>
+
+          <Link
+            href="/contact"
+            aria-current={contactIsActive ? "page" : undefined}
+            className={`shrink-0 rounded-full border-2 px-4 py-2 text-xs font-semibold uppercase tracking-wider transition ${
+              contactIsActive
+                ? "border-white bg-white text-neutral-950"
+                : "border-white/25 bg-white text-neutral-950 hover:bg-neutral-100"
+            }`}
+          >
+            Get in touch
+          </Link>
         </nav>
         <button
           type="button"
@@ -401,50 +411,55 @@ export function SiteHeader() {
               <HamburgerIcon open />
             </button>
           </div>
-          <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-6">
-            {navLinks.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={linkIsActive(item.sectionId) ? "true" : undefined}
-                className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
-                  linkIsActive(item.sectionId)
-                    ? "border-white bg-white/10 text-white"
-                    : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
-                }`}
-                onClick={() => setOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              href="/podcast"
-              aria-current={podcastIsActive ? "page" : undefined}
-              className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
-                podcastIsActive
-                  ? "border-white bg-white/10 text-white"
-                  : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
-              }`}
-              onClick={() => setOpen(false)}
-            >
-              Podcast
-            </Link>
-            <Link
-              href="/blog"
-              aria-current={blogIsActive ? "page" : undefined}
-              className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
-                blogIsActive
-                  ? "border-white bg-white/10 text-white"
-                  : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
-              }`}
-              onClick={() => setOpen(false)}
-            >
-              Blog
-            </Link>
+          <nav className="flex flex-1 flex-col overflow-y-auto px-4 py-6">
+            <p className="px-3 pb-2 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-neutral-400">
+              On this page
+            </p>
+            <div className="flex flex-col gap-1">
+              {navLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={
+                    linkIsActive(item.sectionId) ? "true" : undefined
+                  }
+                  className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
+                    linkIsActive(item.sectionId)
+                      ? "border-white bg-white/10 text-white"
+                      : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
+                  }`}
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+
+            <p className="mt-8 px-3 pb-2 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-[#D2C2A9]/80">
+              Explore
+            </p>
+            <div className="flex flex-col gap-2 px-3">
+              {resourceLinks.map((item) => {
+                const active =
+                  item.href === "/podcast" ? podcastIsActive : blogIsActive;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`w-fit ${resourceLinkMobileClassName(active)}`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+
             <Link
               href="/contact"
               aria-current={contactIsActive ? "page" : undefined}
-              className={`mx-3 mt-6 inline-flex w-fit rounded-full border px-4 py-2.5 text-xs font-semibold uppercase tracking-wider transition ${
+              className={`mx-3 mt-8 inline-flex w-fit rounded-full border-2 px-5 py-3 text-xs font-semibold uppercase tracking-wider transition ${
                 contactIsActive
                   ? "border-white bg-white text-neutral-950"
                   : "border-white/25 bg-white text-neutral-950 hover:bg-neutral-100"
