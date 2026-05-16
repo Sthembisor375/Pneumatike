@@ -21,7 +21,7 @@ const SECTION_IDS = [
 ] as const;
 
 type SectionId = (typeof SECTION_IDS)[number];
-type NavHighlightId = SectionId | "contact";
+type NavHighlightId = SectionId | "contact" | "podcast";
 
 const navLinks: readonly {
   href: string;
@@ -91,7 +91,13 @@ export function SiteHeader() {
   );
 
   const navHighlight: NavHighlightId | null =
-    pathname === "/contact" ? "contact" : pathname === "/" ? activeSectionId : null;
+    pathname === "/contact"
+      ? "contact"
+      : pathname === "/podcast"
+        ? "podcast"
+        : pathname === "/"
+          ? activeSectionId
+          : null;
 
   const animateUnderline = useCallback(
     (mode: "jump" | "quick" | "hide") => {
@@ -265,6 +271,7 @@ export function SiteHeader() {
   const linkIsActive = (sectionId: SectionId) =>
     pathname === "/" && activeSectionId === sectionId;
   const contactIsActive = pathname === "/contact";
+  const podcastIsActive = pathname === "/podcast";
 
   return (
     <header
@@ -306,6 +313,20 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              ref={(el) => {
+                linkRefs.current.podcast = el;
+              }}
+              href="/podcast"
+              aria-current={podcastIsActive ? "page" : undefined}
+              className={`relative z-10 text-xs uppercase tracking-[0.15em] transition-colors ${
+                podcastIsActive
+                  ? "text-white"
+                  : "text-neutral-300 hover:text-white"
+              }`}
+            >
+              Podcast
+            </Link>
             <Link
               ref={(el) => {
                 linkRefs.current.contact = el;
@@ -379,6 +400,18 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
+            <Link
+              href="/podcast"
+              aria-current={podcastIsActive ? "page" : undefined}
+              className={`rounded-lg border-l-2 px-3 py-3 text-sm uppercase tracking-wider transition ${
+                podcastIsActive
+                  ? "border-white bg-white/10 text-white"
+                  : "border-transparent text-neutral-200 hover:bg-white/10 hover:text-white"
+              }`}
+              onClick={() => setOpen(false)}
+            >
+              Podcast
+            </Link>
             <Link
               href="/contact"
               aria-current={contactIsActive ? "page" : undefined}
