@@ -33,7 +33,7 @@ const podcastVideos: LibraryVideo[] = [
     publishedAt: "2026-02-28",
     thumbnailSrc: "/guidance-compass-green.png",
     thumbnailAlt: "Contemplative scene suggesting reflection and direction.",
-    videoUrl: "https://youtu.be/FsztuzyXdhY?si=d4qS6lGJDljNl1Ct",
+    videoUrl: "https://youtu.be/FsztuzyXdhY?si=d4qS6lGJDljNl1Ct12",
   },
   {
     id: "family-rhythms",
